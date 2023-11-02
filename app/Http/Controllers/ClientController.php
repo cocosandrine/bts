@@ -14,8 +14,8 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    
-    
+
+
 
     public function create_client_traitement(Request $request)
     {
@@ -25,7 +25,7 @@ class ClientController extends Controller
         'mailcl' => ['required', 'string', 'email'],
         'telcl' => 'required',
       ]);
-      
+
       $clients =new Client();
       $clients->nomcl = $request->nomcl;
       $clients->adressecl = $request->adressecl;
@@ -34,7 +34,7 @@ class ClientController extends Controller
       $clients->save();
 
       return redirect('/client')->with('status','client ajouter avec succès');
-    
+
     }
 
 
@@ -50,7 +50,7 @@ class ClientController extends Controller
         return view('index', compact('clients'));
         /*$client = client::all();
         return $client;*/
-        
+
 
     }
 
@@ -115,7 +115,7 @@ class ClientController extends Controller
             'mailcl'=>'required|max:255',
             'telcl'=>'required|max:255',
         ]);
-          
+
         $client = client::create($validateData);
         return redirect('/client');*/
     }

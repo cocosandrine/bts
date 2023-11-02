@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('clients', function (Blueprint $table) {
-            $table->id();
-            $table->string ('nomcl');
-            $table->string ('adressecl');
-            $table->string ('mailcl')->unique();
-            $table->string ('telcl');
+        Schema::create('dependre', function (Blueprint $table) {
+            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('abonnement_id');
+            $table->date('date_debut')->nullable();
+            $table->date('date_fin')->nullable();
+            $table->primary(['client_id', 'abonnement_id']);
 
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('dependre');
     }
 };

@@ -4,6 +4,7 @@
 
 <div class="table-wrapper">
     <br>
+<<a href="" class="btn info">Imprimer </a>
 <a href="/create" class="btn btn-primary">Ajout client </a>
    <br>
 
@@ -42,13 +43,13 @@
                 <td>{{ $client->adressecl}}</td>
                 <td>{{ $client->mailcl}}</td>
                 <td>{{ $client->telcl}}</td>
-              
+
                 <td>
                     <a href="{{route('update_client',[$client])}}" class="btn btn-info">Modifier</a>
                     <a href="{{route('delete_client',[$client])}}" class="btn btn-danger">Supprimer</a>
                 </td>
-            
-            
+
+
             </tr>
 
             @php
