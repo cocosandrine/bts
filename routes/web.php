@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\controllers\ClientController;
+use App\Http\controllers\AbonneController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,4 +28,8 @@ Route::get('/delete/{client}', [ClientController::class, 'delete_client'])->name
 
 Route::get('/client', [ClientController::class, 'index']);
 Route::post('/create/traitement', [ClientController::class, 'create_client_traitement'])->name('create_client_traitement');
-Route::get('/create', [ClientController::class, 'create']);
+Route::get('/create', [ClientController::class, 'create']); /*forme*/
+
+Route::get('/formabone', [AbonneController::class, 'formabone']);
+Route::get('/listeabone', [AbonneController::class, 'listeabone']);
+Route::get('/liste/traitement', [AbonneController::class, 'liste_traitement'])->name('liste_traitement');

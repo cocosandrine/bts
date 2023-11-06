@@ -33,7 +33,7 @@
   <div class="container-fluid p-0">
     <img src="/img/tete.jpg" class="resp" style="height: 200px ;">
   </div>
-  <!-- End Header see whatsapp--> 
+  <!-- End Header see whatsapp-->
   <!--  Navbar -->
   <!-- https://getbootstrap.com/docs/5.0/components/navbar/  -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -53,13 +53,13 @@
             <a class="nav-link active" aria-current="page" href="https://getbootstrap.com/">News</a>
           </li>
 
-         
+
 
           <li class="nav-item">
             <a class="nav-link" href="#">Archives</a>
           </li>
-          
-      
+
+
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -72,7 +72,7 @@
                 <hr class="dropdown-divider">
               </li>
               <li><a class="dropdown-item" href="#">Tous les factures</a></li>
-              
+
 
             </ul>
           </li>
@@ -80,10 +80,10 @@
             <a class="nav-link" href="#">Contact Us</a>
           </li>-->
         </ul>
-        <form class="d-flex">
+       <!-- <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Recherche</button>
-        </form>
+        </form>-->
       </div>
     </div>
   </nav>
@@ -106,12 +106,12 @@
         <div class="sidebar">
           <header>Tableau de bord</header>
           <a href="{{ url('/client')}}" class="active">
-            <i class="bi bi-people-fill"></i> 
+            <i class="bi bi-people-fill"></i>
             <span>Client</span>
           </a>
-          <a href="#">
+          <a href="{{ url('/listeabone')}}" class="active">
             <i class="fas fa-link"></i>
-            <span>Services</span>
+            <span>Abonnement</span>
           </a>
           <a href="#">
             <i class="fas fa-stream"></i>
@@ -123,7 +123,7 @@
           </a>
           <a href="#">
             <i class="far fa-question-circle"></i>
-            <span>Suivi abonnement</span>
+            <span>Service</span>
           </a>
           <a href="#">
             <i class="fas fa-sliders-h"></i>
@@ -148,7 +148,7 @@
              BIENVENU !
           </div>
         </div>
-    
+
         <div class="container">
               @yield('content')
 
@@ -166,7 +166,7 @@
 
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-      
+
       <a class="text-white" href="https://mdbootstrap.com/"></a>
     </div>
     <!-- Copyright -->

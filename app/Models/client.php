@@ -11,7 +11,14 @@ class client extends Model
     protected $fillable = [
         'nomcl' ,
          'adressecl',
-         'mailcl' , 
+         'mailcl' ,
          'telcl'
         ];
+
+
+        public function abonnement()
+        {
+            return $this->belongsToMany(abonnement::class, 'client', 'client_id', 'abonnement_id');
+        }
 }
+

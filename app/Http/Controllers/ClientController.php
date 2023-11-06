@@ -33,26 +33,21 @@ class ClientController extends Controller
       $clients->telcl = $request->telcl;
       $clients->save();
 
-      return redirect('/client')->with('status','client ajouter avec succès');
+      return redirect('/create')->with('status','client ajouter avec succès');
 
     }
-
-
-
-
 
 
 
 
     public function index()
     {
-        $clients = client::paginate(15);
+        $clients = client::paginate(6);
         return view('index', compact('clients'));
         /*$client = client::all();
         return $client;*/
-
-
     }
+
 
     public function update_client(client $client){
         /*$client->update(['idcl','nomcl' 'adressecl' 'emailcl'])*/
@@ -75,6 +70,7 @@ class ClientController extends Controller
           return redirect('/client')->with('status','client modifié  avec succès');
     }
 
+    
     public function delete_client(client $client){
         $client->delete();
         return redirect('/client')->with('status','client supprimer  avec succès');
@@ -109,15 +105,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-      /*  $validateData = $request->validate([
-            'nomcl'=>'required|max:255',
-            'adressecl'=>'required|max:255',
-            'mailcl'=>'required|max:255',
-            'telcl'=>'required|max:255',
-        ]);
 
-        $client = client::create($validateData);
-        return redirect('/client');*/
     }
 
     /**

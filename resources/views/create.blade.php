@@ -3,9 +3,11 @@
 
 <div class="container ms-3 mt-4">
 <h1>AJOUTER UN CLIENT</h1>
-    @if (session('status'))
+
+@if (session('status'))
         <div class="alert alert-success">
-            {(session('status'))}
+            {{session('status')}}
+            <button class="btn-close position-absolute end-0 ps-5" data-bs-dismiss='alert'></button>
         </div>
     @endif
 

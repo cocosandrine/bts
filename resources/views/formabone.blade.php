@@ -3,12 +3,13 @@
 
 <div class="container ms-3 mt-4">
     <h1>AJOUTER UN ABONNEMENT</h1>
-        @if (session('status'))
-            <div class="alert alert-success">
-                {(session('status'))}
-            </div>
-        @endif
 
+    @if (session('status'))
+    <div class="alert alert-success">
+        {{session('status')}}
+        <button class="btn-close position-absolute end-0 ps-5" data-bs-dismiss='alert'></button>
+    </div>
+@endif
 
         <ul>
         @foreach ($errors->all() as $error)
@@ -17,7 +18,7 @@
         </ul>
 
 
-    <form action="{{route('')}}" method="POST" class="form-group" enctype="multipart/form-data">
+    <form action="{{route('liste_traitement')}}" method="POST" class="form-group" enctype="multipart/form-data">
 
         @csrf
         <div class="form-group">
@@ -48,7 +49,7 @@
         <br>
         <br>
 
-        <a href="/" class="btn btn-danger">RETOUR A LA LISTE</a>
+        <a href="/listeabone" class="btn btn-danger">RETOUR A LA LISTE</a>
     </form>
     </div>
 @endsection

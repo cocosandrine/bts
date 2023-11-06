@@ -1,19 +1,25 @@
 @extends("layout")
 @section("content")
+
+<br>
+<form class="d-flex ">
+    <label class="btn-group position-absolute end-0">
+        <input class='form-control ' type='search' placeholder='Rechercher'
+               name='search'>
+        <input class='btn btn-success' type='submit' value='Rechercher'>
+    </label>
+  </form>
+  <br>
+
 <h3 class="text-center mt-4">Liste des clients</h3>
 
 <div class="table-wrapper">
     <br>
-<<a href="" class="btn info">Imprimer </a>
+<a href="" class="btn info">Imprimer </a>
 <a href="/create" class="btn btn-primary">Ajout client </a>
    <br>
 
-   @if (session('status'))
-        <div class="alert alert-success">
-            {{session('status')}}
-            <button class="btn-close position-absolute end-0 ps-5" data-bs-dismiss='alert'></button>
-        </div>
-    @endif
+
 
 
 <table class="fl-table">
