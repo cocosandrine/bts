@@ -10,6 +10,7 @@ return new class extends Migration
      * Run the migrations.
      *
      * @return void
+     *
      */
     public function up()
     {
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string ('nomcl');
             $table->string ('adressecl');
-            $table->string ('mailcl')->unique();
+            $table->string ('mailcl');
             $table->string ('telcl');
 
             $table->timestamps();

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\client;
+use App\Models\Client;
 
 
 class ClientController extends Controller
@@ -19,21 +19,24 @@ class ClientController extends Controller
 
     public function create_client_traitement(Request $request)
     {
+      
+
       $request->validate([
         'nomcl' => ['required', 'string'],
         'adressecl' => 'required',
         'mailcl' => ['required', 'string', 'email'],
         'telcl' => 'required',
       ]);
+    $clients =new Client();
+    $clients->nomcl = $request->nomcl;
+    $clients->adressecl = $request->adressecl;
+    $clients->mailcl = $request->mailcl;
+    $clients->telcl = $request->telcl;
+    $clients->save();
 
-      $clients =new Client();
-      $clients->nomcl = $request->nomcl;
-      $clients->adressecl = $request->adressecl;
-      $clients->mailcl = $request->mailcl;
-      $clients->telcl = $request->telcl;
-      $clients->save();
+      $type_menu='';
+      return back()->with('status','client ajouter avec succès');
 
-      return redirect('/create')->with('status','client ajouter avec succès');
 
     }
 
@@ -43,15 +46,18 @@ class ClientController extends Controller
     public function index()
     {
         $clients = client::paginate(6);
-        return view('index', compact('clients'));
-        /*$client = client::all();
-        return $client;*/
+        /*return view('index', ['type_menu' => '']);*/
+        $type_menu='';
+        return view('client.index', compact('clients', 'type_menu') );
+
     }
 
 
     public function update_client(client $client){
         /*$client->update(['idcl','nomcl' 'adressecl' 'emailcl'])*/
-        return view('update', compact('client'));
+
+        $type_menu='';
+        return view('client.update', compact('client', 'type_menu' ));
     }
 
 
@@ -63,14 +69,11 @@ class ClientController extends Controller
             'mailcl' => 'required',
             'telcl' => 'required',
           ]);
-
-
           $client->update($data);
-
           return redirect('/client')->with('status','client modifié  avec succès');
     }
 
-    
+
     public function delete_client(client $client){
         $client->delete();
         return redirect('/client')->with('status','client supprimer  avec succès');
@@ -78,6 +81,16 @@ class ClientController extends Controller
 }
 
 
+public function search()
+    {
+        $q = request()->input('q');
+
+       $clients = client::where('nomcl', 'like', "%$q%")
+                ->orwhere('mailcl', 'like', "%$q%")
+                ->paginate(6);
+
+        return view('client.index', compact('clients'));
+    }
 
 
 
@@ -94,7 +107,10 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('create');
+        $type_menu='';
+        // dump('ok');
+        // return view('create', compact('type_menu'));
+        return view('client.create', ['type_menu' => '']);
     }
 
     /**
