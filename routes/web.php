@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\controllers\ClientController;
 use App\Http\controllers\AbonneController;
+use App\Http\Controllers\authcontroller;
+use App\Http\Controllers\FactureController;
+use App\Http\controllers\ServiceController;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,41 +19,29 @@ use App\Http\controllers\AbonneController;
 |
 */
 
-/*route client*/
-Route::get('/update/{client}', [ClientController::class, 'update_client'])->name('update_client');
-Route::get('/delete/{client}', [ClientController::class, 'delete_client'])->name('delete_client');
- Route::post('/update/traitement/{client}',[ClientController::class, 'update_client_traitement'])->name('update_client_traitement');
+Route::middleware("auth")->group(function(){
 
-Route::get('/client', [ClientController::class, 'index'])->name('client');
-Route::post('/create/traitement', [ClientController::class, 'create_client_traitement'])->name('create_client_traitement');
-Route::get('/create-client', [ClientController::class, 'create'])->name('create-client'); /*forme*/
-
-
-/*route abonnement*/
-Route::get('/formabone', [AbonneController::class, 'formabone']);
-Route::get('/listeabone', [AbonneController::class, 'listeabone'])->name('abonnement');
-Route::get('/update', [AbonneController::class, 'liste_traitement'])->name('liste_traitement');
-
-
-/*route recherche client*/
-Route::get('/search', [ClientController::class, 'search'])->name('search_client');
-
-Route::get('/rech', [AbonneController::class, 'rech'])->name('rech_abonnement');
-Route::post('/updateabonne{abonnement}',[ClientController::class, 'update_abonnement_traitement'])->name('update_abonnement_traitement');
-Route::get('/update/{abonnement}', [ClientController::class, 'update_abonnement'])->name('update_abonnement');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('clients', ClientController::class);
+Route::resource('abonnements', AbonneController::class);
+Route::resource('services', ServiceController::class);
+Route::resource('factures',FactureController::class);
 
 
 
-Route::redirect('/', '/dashboard-general-dashboard');
+Route::get('clt/all', [ClientController::class, 'search'])->name('search.clt');
+Route::get('ab/all', [AbonneController::class, 'search'])->name('search.ab');
+Route::get('ser/all', [AbonneController::class, 'search'])->name('search.ser');
 
-// Dashboard
-Route::get('/dashboard-general-dashboard', function () {
-    return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
-});
-Route::get('/dashboard-ecommerce-dashboard', function () {
-    return view('pages.dashboard-ecommerce-dashboard', ['type_menu' => 'dashboard']);
 });
 
 
+
+Route::get('login',[authcontroller::class, 'login'])->name('login');
+
+Route::post('login', [authcontroller::class,'dologin'])->name("do-login");
+Route::post('logout', [authcontroller::class,'logout'])->name("logout");
+
+Route::get('/liste', 'ListeController@index')->name('liste');
 
 

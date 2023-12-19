@@ -17,21 +17,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+         \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+         \App\Models\User::factory()->create([
+         'name' => 'Test User',
+            'email' => 'test@example.com',
+         ]);
 
          \App\Models\client::factory(10)->create();
          $clients=client::all();
          foreach($clients as $client ){
 
-            abonnement::factory(3)->create(                    [
+            /*abonnement::factory(3)->create(                    [
                         'client_id'=>$client->id
-                    ]);
-         
+                    ]);*/
+
          }
 
 

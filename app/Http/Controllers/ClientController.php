@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Client;
+use App\Http\Requests\ClientRequest;
 
 
 class ClientController extends Controller
@@ -16,102 +17,24 @@ class ClientController extends Controller
 
 
 
-
-    public function create_client_traitement(Request $request)
-    {
-      
-
-      $request->validate([
-        'nomcl' => ['required', 'string'],
-        'adressecl' => 'required',
-        'mailcl' => ['required', 'string', 'email'],
-        'telcl' => 'required',
-      ]);
-    $clients =new Client();
-    $clients->nomcl = $request->nomcl;
-    $clients->adressecl = $request->adressecl;
-    $clients->mailcl = $request->mailcl;
-    $clients->telcl = $request->telcl;
-    $clients->save();
-
-      $type_menu='';
-      return back()->with('status','client ajouter avec succès');
-
-
-    }
-
-
-
-
     public function index()
     {
-        $clients = client::paginate(6);
-        /*return view('index', ['type_menu' => '']);*/
-        $type_menu='';
-        return view('client.index', compact('clients', 'type_menu') );
+        $clients = client::paginate(10);
+        return view('pages.client.index', compact('clients'));
 
     }
-
-
-    public function update_client(client $client){
-        /*$client->update(['idcl','nomcl' 'adressecl' 'emailcl'])*/
-
-        $type_menu='';
-        return view('client.update', compact('client', 'type_menu' ));
-    }
-
-
-    public function update_client_traitement(Request $request, client $client){
-
-        $data=$request->validate([
-            'nomcl' => 'required',
-            'adressecl' => 'required',
-            'mailcl' => 'required',
-            'telcl' => 'required',
-          ]);
-          $client->update($data);
-          return redirect('/client')->with('status','client modifié  avec succès');
-    }
-
-
-    public function delete_client(client $client){
-        $client->delete();
-        return redirect('/client')->with('status','client supprimer  avec succès');
-
-}
-
-
-public function search()
+    public function create()
     {
-        $q = request()->input('q');
 
-       $clients = client::where('nomcl', 'like', "%$q%")
-                ->orwhere('mailcl', 'like', "%$q%")
-                ->paginate(6);
-
-        return view('client.index', compact('clients'));
+        return view('pages.client.create');
     }
-
-
-
-
-
-
-
-
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $type_menu='';
-        // dump('ok');
-        // return view('create', compact('type_menu'));
-        return view('client.create', ['type_menu' => '']);
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -121,8 +44,35 @@ public function search()
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'nomcl'=> 'nullable',
+            'adressecl'=> 'nullable',
+            'mailcl'=> 'nullable',
+            'telcl'=> 'nullable',
 
+        ]);
+        client::create($request->post());
+        $clients=client::paginate(10);
+        return view('pages.client.index',compact('clients'))->with('status','client ajouter avec succès');
     }
+
+
+    public function search(Request $request)
+    {
+
+        $clients = client::where([
+            ['nomcl', '!=', Null],
+            [function ($query) use ($request) {
+                if (($s = $request->search)) {
+                    $query->Where('nomcl', 'LIKE', '%' . $s . '%')
+                         ->orwhere('mailcl', 'like', '%' . $s .'%')->get();
+                }
+            }]
+        ])->paginate(10);
+
+        return view('pages.client.index',compact('clients'));
+    }
+
 
     /**
      * Display the specified resource.
@@ -143,7 +93,9 @@ public function search()
      */
     public function edit($id)
     {
-        //
+        $clients= client::where('id',$id)->first();
+
+        return view('pages.client.editerclient',compact('clients','id'));
     }
 
     /**
@@ -153,9 +105,20 @@ public function search()
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,client $clients, $id)
     {
-        //
+        $validated= $request->validate([
+            'nomcl'=> 'nullable',
+            'adressecl'=> 'nullable',
+            'mailcl'=> 'nullable',
+            'telcl'=> 'nullable',
+
+        ]);
+        $clients = client::find($id);
+        $clients->update($request->all());
+
+
+        return  redirect()->route('clients.index')->with('message', 'L\'élément a été ajouté avec succès!');
     }
 
     /**
@@ -166,6 +129,9 @@ public function search()
      */
     public function destroy($id)
     {
-        //
+        $clients = client::find($id);
+        $clients->delete();
+        return  redirect()->route('clients.index');
     }
+   
 }

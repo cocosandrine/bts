@@ -8,38 +8,99 @@ use App\Models\client;
 
 class AbonneController extends Controller
 {
-    public function formabone()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-
-        return view('abonnement.formabone');
+        $clients= client::with('abonnements')->paginate(10);
+        return view('pages.abonnement.listeabone',compact('clients'));
     }
 
-
-    public function listeabone()
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $type_menu='';
-       $clients= client::with('abonnements')->paginate(10);
-        return view('abonnement.listeabone',compact('clients','type_menu'));
+
+        return view('page.abonnement.formabone');
     }
 
-public function rech()
-{
-    $r = request()->input('r');
-    $abonnement = abonnement ::where('nomab', 'like', "%$r%")
-                ->paginate(6);
-                return view('abonnement.listabone', compact('abonnements'));
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    public function search(Request $request)
+    {
+        $abonnement = abonnement::where([
+            ['nomab', '!=', Null],
+            [function ($query) use ($request) {
+                if (($s = $request->search)) {
+                    $query->Where('nomab', 'LIKE', '%' . $s . '%')->get();
+                }
+            }]
+        ])->paginate(10);
+
+        return view('Pages.abonnement.listabone',compact('abonnements'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $abonnement= abonnement::find($id);
+        $abonnement->delete();
+        return redirect()->route('abonnements.index');
+        }
 }
 
-public function update_abonnement(abonnement $abonnement){
-    return view('abonnement.update', compact('abonnement'));
-}
 
-
-public function abonnement_traitement(Request $request, abonnement $abonnement)
-{
-    $data=$request->validate([
-
-    ]);
-}
-}

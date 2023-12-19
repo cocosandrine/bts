@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('factser', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('facture_id')->constrained()->onDelete('cascade');
+            $table->foreignId('service_id')->constrained()->onDelete('cascade');
+            $table->date('date_debser')->nullable();
+            $table->date('date_finser')->nullable();
+            $table->integer('quantite');
+            $table->decimal('prix', 10, 2);
             $table->timestamps();
         });
     }

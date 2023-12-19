@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('abonnement_id')->constrained();
             $table->string('nomser');
+            $table->string('descser');
             $table->timestamps();
 
 
@@ -32,4 +33,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('service');
     }
+
 };

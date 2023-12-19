@@ -1,9 +1,10 @@
 <?php
 
 use App\Models\client;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\facture;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -18,14 +19,20 @@ return new class extends Migration
             $table->id();
             $table->string('nomab');
 
-            $table->date('date_debut')->nullable();
-            $table->date('date_fin')->nullable();
+            $table->date('date_debab')->nullable();
+            $table->date('date_finab')->nullable();
 
             $table->foreignIdFor(client::class)
                 ->constrained()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->timestamps();
+
+
+            $table->foreignIdFor(facture::class)
+                ->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
 
 
         });

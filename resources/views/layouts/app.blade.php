@@ -1,77 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
 
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"
-        name="viewport">
-    <title>@yield('title') &mdash; Stisla</title>
+      <!-- CSRF Token -->
+      <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- General CSS Files -->
-    <link rel="stylesheet"
-        href="{{ asset('library/bootstrap/dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer" />
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>@yield('title')</title>
 
-    @stack('style')
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}" >
 
-    <!-- Template CSS -->
-    <link rel="stylesheet"
-        href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('css/components.css') }}">
+  <link rel="stylesheet" href="{{asset('fontawesome/css/all.css')}}">
+  <!-- CSS Libraries -->
 
-    <!-- Start GA -->
-    <script async
-        src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/css/components.css')}}">
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
 
-        gtag('config', 'UA-94034622-3');
-    </script>
-    <!-- END GA -->
+
+    <title>{{ config('app.name', 'Tit') }}</title>
+
+    <!-- Scripts -->
+    <script src="{{ asset('assets/js/app.js') }}" defer></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+  {{--   <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 </head>
-</head>
-
 <body>
     <div id="app">
-        <div class="main-wrapper">
-            <!-- Header -->
-            @include('components.header')
 
-            <!-- Sidebar -->
-            @include('components.sidebar')
+                    @guest
 
-            <!-- Content -->
-            @yield('main')
+                        
+                    @else
 
-            <!-- Footer -->
-            @include('components.footer')
-        </div>
-    </div>
+                        <div class="main-wrapper">
+                                <div class="navbar-bg"></div>
 
-    <!-- General JS Scripts -->
-    <script src="{{ asset('library/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('library/popper.js/dist/umd/popper.js') }}"></script>
-    <script src="{{ asset('library/tooltip.js/dist/umd/tooltip.js') }}"></script>
-    <script src="{{ asset('library/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('library/jquery.nicescroll/dist/jquery.nicescroll.min.js') }}"></script>
-    <script src="{{ asset('library/moment/min/moment.min.js') }}"></script>
-    <script src="{{ asset('js/stisla.js') }}"></script>
+                            {{--  bar de navigation --}}
 
-    @stack('scripts')
+                                    @include('layouts.navbar')
 
-    <!-- Template JS File -->
-    <script src="{{ asset('js/scripts.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
+                            {{-- End bar de navigation--}}
+
+                                {{-- side bar --}}
+
+                                    <div class="main-sidebar">
+                                    @include('layouts.aside')
+                                    </div>
+                                {{-- end side bar --}}
+
+                    @endguest
+
+                                 {{--  @yield('navside') --}}
+
+                                <div class="main-content">
+                                    <section class="section">
+                                        @yield('content')
+                                    </section>
+                                </div>
+
+                            {{--  @yield('footer') --}}
+                        </div>
+        {{-- </main> --}}
+    @extends('layouts.script')
 </body>
-
 </html>

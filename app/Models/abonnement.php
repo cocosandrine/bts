@@ -26,9 +26,19 @@ class abonnement extends Model
 
     public function service()
     {
-        return $this->hasMany(service::class);
+        return $this->belongsToMany(service::class);
     }
 
+    public function facture()
+    {
+        return $this->belongsTo(facture::class);
+    }
+
+    public function scopeTotal ( $query,$facture_id)
+
+    {
+        return $query->where('facture_id', '=', $facture_id);
+    }
 
 }
 
